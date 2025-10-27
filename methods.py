@@ -1,5 +1,4 @@
 from function import Function
-import numpy as np
 from decimal import Decimal
 
 
@@ -13,18 +12,15 @@ def eulers(dydt: Function, t, y, tn, *, step=Decimal(.1)):
 
         overflow += 1
         if overflow > 2 ** 16:
-            raise(IndexError("Overflow limit exceeded"))
+            raise (IndexError("Overflow limit exceeded"))
 
     return y
 
-    pass
-
 
 def taylors(f: Function, dfdy: Function, dfdt: Function, t, y, tn, *, step=Decimal(.1)):
-
     t, y, tn, step = Decimal(t), Decimal(y), Decimal(tn), Decimal(step)
 
-    while( t < tn):
+    while t < tn:
         y += (step * f(t, y)) + (((step ** 2) / 2) * (dfdy(t, y) * f(t, y) + dfdt(t, y)))
 
         t += step
@@ -32,5 +28,17 @@ def taylors(f: Function, dfdy: Function, dfdt: Function, t, y, tn, *, step=Decim
     return y
 
 
-def rk4(dydt: Function):
-    pass
+def rk4(f: Function, t, y, tn, *, step=Decimal(.1)):
+    t, y, tn, step = Decimal(t), Decimal(y), Decimal(tn), Decimal(step)
+
+    while t < tn:
+        k1 = f(t, y)
+        k2 = f(t + (step / 2), y + (step / 2) * k1)
+        k3 = f(t + (step / 2), y + (step / 2) * k2)
+        k4 = f(t + step, y + step * k3)
+
+        y += (step / 6) * (k1 + 2 * k2 + 2 * k3 + k4)
+
+        t += step
+
+    return y
