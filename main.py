@@ -13,10 +13,19 @@ def problem_one():
     initial_y = 1
     stop_t = 3
 
+
+    exact = Decimal(np.log(((1 * np.exp(12)) / 4) + np.exp(1) - (1 / 4)))
+    print(f'The exact value of y(3) = {exact}.')
     table = pd.DataFrame()
-    table['Euler'] = pd.Series({h: eulers(f, initial_t, initial_y, stop_t, step=h) for h in steps_sizes})
-    table["Taylor's"] = pd.Series({h: taylors(f, dfdy, dfdt, initial_t, initial_y, stop_t, step=h) for h in steps_sizes})
-    table['RK-4'] = pd.Series({h: rk4(f, initial_t, initial_y, stop_t, step=h) for h in steps_sizes})
+    euler = pd.Series({h: eulers(f, initial_t, initial_y, stop_t, step=h) for h in steps_sizes})
+    table['Euler'] = euler
+    table['Euler Error'] = pd.Series({h: np.abs((euler[h]) - exact) for h in steps_sizes})
+    taylor = pd.Series({h: taylors(f, dfdy, dfdt, initial_t, initial_y, stop_t, step=h) for h in steps_sizes})
+    table["Taylor's"] = taylor
+    table['Taylor\'s Error'] = pd.Series({h: np.abs((taylor[h]) - exact) for h in steps_sizes})
+    runge = pd.Series({h: rk4(f, initial_t, initial_y, stop_t, step=h) for h in steps_sizes})
+    table['RK-4'] = runge
+    table['RK-4 Error'] = pd.Series({h: np.abs((runge[h]) - exact) for h in steps_sizes})
 
     print(table)
 
