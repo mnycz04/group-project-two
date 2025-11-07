@@ -3,16 +3,16 @@ from methods import *
 import numpy as np
 import pandas as pd
 
+
 def problem_one():
     f = Function(equation=lambda t, y: np.exp(4 * t - y))
-    dfdy = Function(equation=lambda t, y: -1 * np.exp(4 * t -y))
+    dfdy = Function(equation=lambda t, y: -1 * np.exp(4 * t - y))
     dfdt = Function(equation=lambda t, y: 4 * np.exp(4 * t - y))
     steps_sizes = (.2, .02, .002)
 
     initial_t = 0
     initial_y = 1
     stop_t = 3
-
 
     exact = Decimal(np.log(((1 * np.exp(12)) / 4) + np.exp(1) - (1 / 4)))
     print('Problem One:')
@@ -30,11 +30,13 @@ def problem_one():
 
     print(table)
 
+
 def problem_two():
     f = Function(equation=lambda t, Y: np.concatenate(
         (
             Y[1:], np.array(
-            ((t ** 3) - 2 + (Decimal(str(np.log(float(t)))) * Decimal(str(np.cos(float(Y[0] ** 2)))) * Decimal(str(np.exp(-1 * Y[1])))),)
+            ((t ** 3) - 2 + (Decimal(str(np.log(float(t)))) * Decimal(str(np.cos(float(Y[0] ** 2)))) * Decimal(
+                str(np.exp(-1 * Y[1])))),)
         )
         )
     ))
@@ -45,6 +47,7 @@ def problem_two():
     print("Problem Two:")
     print(f'Y(3) = [{approximation[0]}, {approximation[1]}]')
     print(f'y(3) = {approximation[0]}')
+
 
 def problem_three():
     f = Function(equation=lambda t, Y: np.concatenate((Y[1:],
@@ -59,6 +62,7 @@ def problem_three():
     print('Problem Three:')
     print(f'Y(3) = [{approximation[0]}, {approximation[1]}]')
     print(f'y(3) = {approximation[0]}')
+
 
 if __name__ == '__main__':
     pd.set_option('display.max_columns', 5000)

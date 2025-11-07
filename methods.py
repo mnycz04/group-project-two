@@ -7,7 +7,6 @@ def eulers(dydt: Function, t, y, tn, *, step=Decimal(.1)):
     if y is float or y is int:
         y = Decimal(y)
 
-
     overflow = 0
     while t < tn:
         y += dydt(t, y) * ((t + step) - t)
