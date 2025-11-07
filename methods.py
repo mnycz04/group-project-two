@@ -14,7 +14,7 @@ def eulers(dydt: Function, t, y, tn, *, step=Decimal(.1)):
         t += step
 
         overflow += 1
-        if overflow > 2 ** 16:
+        if overflow > 2 ** 32:
             raise (IndexError("Overflow limit exceeded"))
 
     return y

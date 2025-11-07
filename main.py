@@ -46,6 +46,19 @@ def problem_two():
     print(f'Y(3) = [{approximation[0]}, {approximation[1]}]')
     print(f'y(3) = {approximation[0]}')
 
+def problem_three():
+    f = Function(equation=lambda t, Y: np.concatenate((Y[1:],
+                                                       np.array(
+                                                           ((-4 * Y[1] - 5 * Y[0]) + Decimal(str(np.sin(float(t)))),))
+                                                       )))
+
+    initial_conditions = (0, 1)
+    initial_conditions = np.array([Decimal(i) for i in initial_conditions])
+
+    approximation = eulers(f, 0, initial_conditions, 3, step=10 ** (-5))
+    print('Problem Three:')
+    print(f'Y(3) = [{approximation[0]}, {approximation[1]}]')
+    print(f'y(3) = {approximation[0]}')
 
 if __name__ == '__main__':
     pd.set_option('display.max_columns', 5000)
@@ -53,5 +66,6 @@ if __name__ == '__main__':
 
     problem_one()
     problem_two()
+    problem_three()
 
     exit(0)
