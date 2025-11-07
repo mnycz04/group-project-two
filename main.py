@@ -30,10 +30,28 @@ def problem_one():
 
     print(table)
 
+def problem_two():
+    f = Function(equation=lambda t, Y: np.concatenate(
+        (
+            Y[1:], np.array(
+            ((t ** 3) - 2 + (Decimal(str(np.log(float(t)))) * Decimal(str(np.cos(float(Y[0] ** 2)))) * Decimal(str(np.exp(-1 * Y[1])))),)
+        )
+        )
+    ))
+    initial_conditions = (3, -1)
+    initial_conditions = np.array([Decimal(i) for i in initial_conditions])
+    approximation = (eulers(f, 1, initial_conditions, 3, step=10 ** (-3)))
+
+    print("Problem Two:")
+    print(f'Y(3) = [{approximation[0]}, {approximation[1]}]')
+    print(f'y(3) = {approximation[0]}')
+
 
 if __name__ == '__main__':
     pd.set_option('display.max_columns', 5000)
     pd.set_option('display.max_rows', 500)
+
     problem_one()
+    problem_two()
 
     exit(0)
