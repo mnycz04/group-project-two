@@ -20,7 +20,9 @@ def eulers(dydt: Function, t, y, tn, *, step=Decimal(.1)):
 
 
 def taylors(f: Function, dfdy: Function, dfdt: Function, t, y, tn, *, step=Decimal(.1)):
-    t, y, tn, step = Decimal(str(t)), Decimal(str(y)), Decimal(str(tn)), Decimal(str(step))
+    t, tn, step = Decimal(str(t)), Decimal(str(tn)), Decimal(str(step))
+    if y is float or y is int:
+        y = Decimal(y)
 
     while t < tn:
         y += (step * f(t, y)) + (((step ** 2) / 2) * (dfdy(t, y) * f(t, y) + dfdt(t, y)))
@@ -31,7 +33,9 @@ def taylors(f: Function, dfdy: Function, dfdt: Function, t, y, tn, *, step=Decim
 
 
 def rk4(f: Function, t, y, tn, *, step=Decimal(.1)):
-    t, y, tn, step = Decimal(str(t)), Decimal(str(y)), Decimal(str(tn)), Decimal(str(step))
+    t, tn, step = Decimal(str(t)), Decimal(str(tn)), Decimal(str(step))
+    if y is float or y is int:
+        y = Decimal(y)
 
     while t < tn:
         k1 = f(t, y)
