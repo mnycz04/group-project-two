@@ -42,11 +42,19 @@ def problem_two():
     ))
     initial_conditions = (3, -1)
     initial_conditions = np.array([Decimal(i) for i in initial_conditions])
-    approximation = (eulers(f, 1, initial_conditions, 3, step=10 ** (-3)))
+    approx_euler = (eulers(f, 1, initial_conditions, 3, step=10 ** (-3)))
 
     print("Problem Two:")
-    print(f'Y(3) = [{approximation[0]}, {approximation[1]}]')
-    print(f'y(3) = {approximation[0]}')
+    print("\tEuler's Method")
+    print(f'\t\tY(3) = [{approx_euler[0]}, {approx_euler[1]}]')
+    print(f'\t\ty(3) = {approx_euler[0]}')
+
+    initial_conditions = (3, -1)
+    initial_conditions = np.array([Decimal(i) for i in initial_conditions])
+    approx_rk4 = (rk4(f, 1, initial_conditions, 3, step=10 ** (-3)))
+    print("\tRK-4")
+    print(f'\t\tY(3) = [{approx_rk4[0]}, {approx_rk4[1]}]')
+    print(f'\t\ty(3) = {approx_rk4[0]}')
 
 
 def problem_three():
@@ -57,11 +65,19 @@ def problem_three():
 
     initial_conditions = (0, 1)
     initial_conditions = np.array([Decimal(i) for i in initial_conditions])
-
-    approximation = eulers(f, 0, initial_conditions, 3, step=10 ** (-5))
+    approx_eulers = eulers(f, 0, initial_conditions, 3, step=10 ** (-5))
     print('Problem Three:')
-    print(f'Y(3) = [{approximation[0]}, {approximation[1]}]')
-    print(f'y(3) = {approximation[0]}')
+    print("\tEuler's Method")
+    print(f'\t\tY(3) = [{approx_eulers[0]}, {approx_eulers[1]}]')
+    print(f'\t\ty(3) = {approx_eulers[0]}')
+
+    initial_conditions = (0, 1)
+    initial_conditions = np.array([Decimal(i) for i in initial_conditions])
+    approx_rk4 = rk4(f, 0, initial_conditions, 3, step=10 ** (-5))
+    print('Problem Three:')
+    print("\tRK-4")
+    print(f'\t\tY(3) = [{approx_rk4[0]}, {approx_rk4[1]}]')
+    print(f'\t\ty(3) = {approx_rk4[0]}')
 
 
 if __name__ == '__main__':
