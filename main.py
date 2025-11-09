@@ -72,10 +72,30 @@ def problem_three():
 
     initial_rk4 = np.array([Decimal(i) for i in initial_conditions])
     approx_rk4 = rk4(f, 0, initial_rk4, 3, step=10 ** (-5))
-    print('Problem Three:')
     print("\tRK-4")
     print(f'\t\tY(3) = [{approx_rk4[0]}, {approx_rk4[1]}]')
     print(f'\t\ty(3) = {approx_rk4[0]}')
+
+
+def problem_four():
+    initial = Function(equation=lambda x: (4 * x - (x ** 2)))
+    boundary = Function(equation=lambda t: 5 * (np.sin(np.pi * t)))
+
+    def u(x):
+        if 0 <= x < 2.5:
+            return 5 * np.sin(np.pi * (9 - (4 * x)))
+        else:
+            return (4 * (x - 2.25)) - ((x - 2.25) ** 2)
+
+    print("Problem Four:")
+    table = pd.DataFrame()
+    exact = Function(equation=u)
+    table['Exact'] = {i: exact(i) for i in np.linspace(0, 6, int(6 / .3))}
+    approx = upwind_scheme(initial, boundary, (0, 6), -.25, .6, .3, 9)[-1]
+    table['Approximation'] = approx
+    table['Error'] = np.abs(np.array([exact(i) for i in np.linspace(0, 6, int(6 / .3))]) - approx)
+
+    print(table)
 
 
 if __name__ == '__main__':
@@ -85,5 +105,6 @@ if __name__ == '__main__':
     problem_one()
     problem_two()
     problem_three()
+    problem_four()
 
     exit(0)

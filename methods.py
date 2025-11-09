@@ -1,3 +1,6 @@
+import numpy as np
+
+from math import ceil
 from function import Function
 from decimal import Decimal
 
@@ -48,3 +51,18 @@ def rk4(f: Function, t, y, tn, *, step=Decimal(.1)):
         t += step
 
     return y
+
+
+def upwind_scheme(u0: Function, ub: Function, domain: tuple[float, float], c: float, h: float, k: float, tn: int):
+    ncols = ceil((domain[1] - domain[0]) / k)
+    nrows = ceil(tn / h)
+
+    u = np.zeros((nrows, ncols))
+    u[0] = u0(np.linspace(domain[0], domain[1], ncols))
+    u[:, 0] = ub(np.linspace(0, tn, nrows))
+
+    for i in range(0, nrows - 1):
+        for j in range(1, ncols):
+            u[i + 1, j] = u[i, j] + (((h * c) / k) * (u[i, j] - u[i, j - 1]))
+
+    return u
