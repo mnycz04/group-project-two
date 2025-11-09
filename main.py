@@ -93,9 +93,12 @@ def problem_four():
     table['Exact'] = {i: exact(i) for i in np.linspace(0, 6, int(6 / .3))}
     approx = upwind_scheme(initial, boundary, (0, 6), -.25, .6, .3, 9)[-1]
     table['Approximation'] = approx
-    table['Error'] = np.abs(np.array([exact(i) for i in np.linspace(0, 6, int(6 / .3))]) - approx)
-
+    error = np.abs(np.array([exact(i) for i in np.linspace(0, 6, int(6 / .3))]) - approx)
+    table['Error'] = error
     print(table)
+
+    average_error = sum(np.abs(error)) / len(error)
+    print(f'Average absolute error is {average_error}.')
 
 
 if __name__ == '__main__':
